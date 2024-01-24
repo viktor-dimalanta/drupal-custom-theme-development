@@ -1,0 +1,26 @@
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+{% if label_hidden %}
+  {% if multiple %}
+    {% set attributes = attributes.addClass(classes, 'field__items') %}
+  {% else %}
+    {% set attributes = attributes.addClass(classes, 'field__item') %}
+  {% endif %}
+{% else %}
+  {% set attributes = attributes.addClass(classes) %}
+  {% set title_attributes = title_attributes.addClass(title_classes) %}
+{% endif %}
+
+{% include '@molecules/field/classy-field/_classy-field.html.twig' %}

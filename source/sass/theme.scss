@@ -1,0 +1,10 @@
+/**
+ * @file
+ * sass/theme.scss
+ *
+ * CSS rules that style theme and are not included with components.
+ */
+
+@import "partials/imports";
+
+@import "../_patterns/**/_*.theme.scss";

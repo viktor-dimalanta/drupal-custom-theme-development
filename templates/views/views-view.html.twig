@@ -1,0 +1,12 @@
+{%
+  set classes = [
+    'view',
+    'view-' ~ id|clean_class,
+    'view-id-' ~ id,
+    'view-display-id-' ~ display_id,
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+{% set attributes = attributes.addClass(classes) %}
+
+{% include '@organisms/views/classy-views-view/_classy-views-view.html.twig' %}

@@ -1,0 +1,9 @@
+{%
+  set classes = [
+    has_parent ? 'js-form-wrapper',
+    has_parent ? 'form-wrapper',
+  ]
+%}
+{% set attributes = attributes.addClass(classes) %}
+
+{% include '@molecules/form/classy-container/_classy-container.html.twig' %}

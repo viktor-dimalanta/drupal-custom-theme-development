@@ -1,0 +1,35 @@
+{
+  "name": "shila-drupal-theme",
+  "version": "1.0.0",
+  "description": "Shila theme for Drupal 8",
+  "devDependencies": {
+    "@pattern-lab/cli": "^1.0.1",
+    "@pattern-lab/core": "^3.0.3",
+    "@pattern-lab/engine-twig-php": "^3.0.3",
+    "@pattern-lab/uikit-workshop": "^1.0.4",
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-dart-sass": "^1.0.2",
+    "gulp-sass-glob": "^1.0.9",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-stylelint": "^9.0.0",
+    "js-yaml": "^3.13.1",
+    "shila-css": "1.1.0",
+    "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-no-browser-hacks": "^1.2.1",
+    "stylelint-scss": "^3.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aleksip/shila-drupal-theme"
+  },
+  "license": "GPL-2.0",
+  "scripts": {
+    "setup": "npm install && composer install",
+    "setup-pattern-lab-php": "if [ ! -d pattern-lab-php ]; then composer create-project -n pattern-lab/edition-twig-standard pattern-lab-php && cd pattern-lab-php && composer require aleksip/plugin-data-transform && php core/console -c --set sourceDir=../source && php core/console -c --set publicDir=../public && php core/console -c --set twigAutoescape=0 && cd ..; fi",
+    "clean": "rm -rf pattern-lab-php && rm -rf node_modules && rm -rf public && rm -rf vendor"
+  },
+  "dependencies": {}
+}

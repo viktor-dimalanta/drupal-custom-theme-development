@@ -1,0 +1,12 @@
+global-styling:
+  css:
+    base:
+      source/css/base.css: {}
+    component:
+      source/css/component.css: {}
+    layout:
+      source/css/layout.css: {}
+    state:
+      source/css/state.css: {}
+    theme:
+      source/css/theme.css: {}

@@ -1,0 +1,13 @@
+{%
+  set classes = [
+    'comment',
+    'js-comment',
+    status != 'published' ? status,
+    comment.owner.anonymous ? 'by-anonymous',
+    author_id and author_id == commented_entity.getOwnerId() ? 'by-' ~ commented_entity.getEntityTypeId() ~ '-author',
+  ]
+%}
+{% set attributes = attributes.addClass(classes) %}
+{% set content_attributes = content_attributes.addClass('content') %}
+
+{% include '@organisms/content/classy-comment/_classy-comment.html.twig' %}

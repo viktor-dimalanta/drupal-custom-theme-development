@@ -1,0 +1,155 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in Shila theme.
+ */
+
+/**
+ * Adds classes to field items.
+ *
+ * Implements hook_preprocess_HOOK() for field.html.twig.
+ */
+function shila_theme_preprocess_field(&$variables) {
+  if ($variables['label_hidden']) {
+    if ($variables['multiple']) {
+      foreach ($variables['items'] as &$item) {
+        $item['attributes']->addClass('field__item');
+      }
+    }
+  }
+  else {
+    foreach ($variables['items'] as &$item) {
+      $item['attributes']->addClass('field__item');
+    }
+  }
+}
+
+/**
+ * Adds classes and generated links to menu items.
+ *
+ * Implements hook_preprocess_HOOK() for menu.html.twig.
+ */
+function shila_theme_preprocess_menu(&$variables) {
+  _menu_links($variables['items'], 0, \Drupal::service('twig.extension'));
+}
+
+/**
+ * Helper function for adding classes and generated links to menu items.
+ */
+function _menu_links(&$items, $menu_level, $twig_extension) {
+  foreach ($items as &$item) {
+    $classes = ['menu-item'];
+    if ($item['is_expanded']) {
+      $classes[] = 'menu-item--expanded';
+    }
+    if ($item['is_collapsed']) {
+      $classes[] = 'menu-item--collapsed';
+    }
+    if ($item['in_active_trail']) {
+      $classes[] = 'menu-item--active-trail';
+    }
+    $item['attributes']->addClass($classes);
+    if ($item['title'] && $item['url']) {
+      $item['link'] = $twig_extension->getLink($item['title'], $item['url']);
+    }
+    if ($item['below']) {
+      _menu_links($item['below'], $menu_level + 1, $twig_extension);
+    }
+  }
+}
+
+/**
+ * Removes specific attributes from pagers.
+ *
+ * Implements hook_preprocess_HOOK() for pager.html.twig.
+ */
+function shila_theme_preprocess_pager(&$variables) {
+  $keys = [
+    'first' => ['href', 'title'],
+    'previous' => ['href', 'title', 'rel'],
+    'next' => ['href', 'title', 'rel'],
+    'last' => ['href', 'title'],
+  ];
+  foreach ($keys as $key => $remove) {
+    _remove_attributes($variables, $key, $remove);
+  }
+  if (isset($variables['items']['pages'])) {
+    foreach ($variables['items']['pages'] as $item) {
+      if (isset($item['attributes'])) {
+        $item['attributes']->removeAttribute('href')->removeAttribute('title');
+      }
+    }
+  }
+}
+
+/**
+ * Helper function for removing attributes.
+ */
+function _remove_attributes(&$variables, $key, $remove) {
+  if (isset($variables['items'][$key]['attributes'])) {
+    foreach ($remove as $attribute) {
+      $variables['items'][$key]['attributes']->removeAttribute($attribute);
+    }
+  }
+}
+
+/**
+ * Creates attributes for each message type.
+ *
+ * Implements template_preprocess_status_messages().
+ */
+function shila_theme_preprocess_status_messages(&$variables) {
+  $variables['type_attributes'] = [];
+  foreach ($variables['message_list'] as $type => $messages) {
+    $attributes = $variables['attributes'];
+    $attributes['class'][] = 'messages';
+    $attributes['class'][] = 'messages--' . $type;
+    unset($attributes['role']);
+    unset($attributes['aria-label']);
+    $variables['type_attributes'][$type] = new \Drupal\Core\Template\Attribute($attributes);
+  }
+}
+
+/**
+ * Conditionally adds default views classes.
+ *
+ * Implements template_preprocess_views_view_table().
+ */
+function shila_theme_preprocess_views_view_table(&$variables) {
+  if ($variables['header']) {
+    foreach ($variables['header'] as $key => &$column) {
+      if ($column['default_classes']) {
+        $column_classes = [
+          'views-field',
+          'views-field-' . $variables['fields'][$key]
+        ];
+        $column['attributes']->addClass($column_classes)->setAttribute('scope', 'col');
+      }
+    }
+  }
+  foreach ($variables['rows'] as &$row) {
+    foreach ($row['columns'] as $key => &$column) {
+      if ($column['default_classes']) {
+        $column_classes = ['views-field'];
+        foreach ($column['fields'] as $field) {
+          $column_classes[] = 'views-field-' . $field;
+        }
+        $column['attributes']->addClass($column_classes);
+      }
+    }
+  }
+}
+
+/**
+ * Conditionally adds default views row classes.
+ *
+ * Implements template_preprocess_views_view_unformatted().
+ */
+function shila_theme_preprocess_views_view_unformatted(&$variables) {
+  if ($variables['default_row_class']) {
+    foreach ($variables['rows'] as &$row) {
+      $row['attributes']->addClass('views-row');
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+{% set attributes = attributes.addClass(classes) %}
+{% set author_attributes = author_attributes.addClass('node__submitted') %}
+{% set submitted %}{% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}{% endset %}
+{% set content_attributes = content_attributes.addClass('node__content') %}
+
+{% block template %}
+  {% include '@organisms/content/classy-node/_classy-node.html.twig' %}
+{% endblock %}

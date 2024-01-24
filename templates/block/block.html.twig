@@ -1,0 +1,12 @@
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+{% set attributes = attributes.addClass(classes) %}
+
+{% block template %}
+  {% include '@organisms/block/classy-block/_classy-block.html.twig' %}
+{% endblock %}
