@@ -16,18 +16,6 @@ npm run setup
 ```
 
 
-## Additional setup for Pattern Lab PHP
-
-The default setup is for Pattern Lab Node. Follow these additional instructions if you want to use Pattern Lab PHP.
-
-In the Shila theme root directory run
-
-```sh
-npm run setup-pattern-lab-php
-```
-
-Then open `gulp-config.yml` and uncomment the `dir` line in the Pattern Lab section.
-
 
 ## Gulp tasks
 
@@ -47,12 +35,3 @@ To list all available tasks with short descriptions, in the Shila theme root dir
 gulp --tasks
 ```
 
-
-## Known issues with Pattern Lab Node
-
-- There might be one or more errors similar to `request to http://127.0.0.1:32853/?type=renderFile failed, reason: connect ECONNRESET 127.0.0.1:32853`. Try generating the site again until there are no such errors.
-
-
-## Integrating with Drupal
-
-Prerequisites:  [Component Libraries](https://www.drupal.org/project/components) module installed and enabled.
